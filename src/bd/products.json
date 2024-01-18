@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "title": "Toyota Corolla",
+    "description": "Sedan 1.8 XEI",
+    "price": 30000,
+    "code": "cc",
+    "stock": 10
+  },
+  {
+    "id": 2,
+    "title": "Toyota Camry",
+    "description": "Sedan 2.5 XLE",
+    "price": 40000,
+    "code": "camry",
+    "stock": 8
+  },
+  {
+    "id": 3,
+    "title": "Toyota RAV4",
+    "description": "SUV 2.5 Adventure",
+    "price": 35000,
+    "code": "rav4",
+    "stock": 12
+  },
+  {
+    "id": 4,
+    "title": "Toyota Etios",
+    "description": "XS 1.5",
+    "price": 20000,
+    "code": "etios",
+    "stock": 14
+  },
+  {
+    "id": 5,
+    "title": "Toyota Yaris",
+    "description": "XLS 1.5",
+    "price": 25000,
+    "code": "yaris",
+    "stock": 16
+  },
+  {
+    "id": 6,
+    "title": "Toyota Hilux",
+    "description": "4x4 srx",
+    "price": 45000,
+    "code": "hilux",
+    "stock": 18
+  },
+  {
+    "id": 7,
+    "title": "Toyota SW4",
+    "description": "4x2 srv",
+    "price": 50000,
+    "code": "sw4",
+    "stock": 20
+  },
+  {
+    "id": 8,
+    "title": "Toyota CRW",
+    "description": "SUV 2.0 turbo",
+    "price": 33000,
+    "code": "crw",
+    "stock": 22
+  },
+  {
+    "id": 9,
+    "title": "Toyota CH1",
+    "description": "Gran Toyota Familiar",
+    "price": 55000,
+    "code": "ch1",
+    "stock": 5
+  },
+  {
+    "id": 10,
+    "title": "Toyota Premier",
+    "description": "AdventureTrial",
+    "price": 47000,
+    "code": "premier",
+    "stock": 3
+  }
+]
