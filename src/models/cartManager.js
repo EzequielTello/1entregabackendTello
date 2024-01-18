@@ -43,7 +43,7 @@ class CartManager {
       products: [],
     };
     carts.push(newCart);
-    await fs.writeFile(CARTS_PATH, JSON.stringify(carts));
+    await fs.writeFile(CARTS_PATH, JSON.stringify(carts, null, 2));
     return newCart;
   }
 
@@ -146,7 +146,7 @@ class CartManager {
   // Leer productos
   async getProducts() {
     try {
-      const content = await fs.readFile(PRODUCTS_PATH, "utf-8");
+      const content = await fs.readFile(PATH, "utf-8");
       return JSON.parse(content);
     } catch (error) {
       console.error("No se leyeron los productos:", error);

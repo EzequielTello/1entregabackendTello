@@ -14,7 +14,7 @@ class ProductManager {
     this.products = [];
   }
   NextId(products) {
-    let nextId = products.reduce((maxId, product) => {
+    let nextId = this.products.reduce((maxId, product) => {
       return product.id > maxId ? product.id : maxId;
     }, 0);
     return nextId + 1;
@@ -29,7 +29,7 @@ class ProductManager {
       console.log("Producto ya existente, intenta agregar uno distinto");
     } else {
       product.id = this.NextId(products);
-      product.push(product);
+      this.products.push(product);
       await fs.writeFile(PATH, JSON.stringify(products));
     }
   }
