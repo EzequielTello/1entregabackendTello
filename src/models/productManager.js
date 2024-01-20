@@ -22,14 +22,12 @@ class ProductManager {
   // CRUD
 
   async addProduct(product) {
-    const validateProd = this.products.find(
-      (prod) => prod.code === product.code
-    );
+    const validateProd = products.find((prod) => prod.code === product.code);
     if (validateProd) {
       console.log("Producto ya existente, intenta agregar uno distinto");
     } else {
       product.id = this.NextId(products);
-      this.products.push(product);
+      products.push(product);
       await fs.writeFile(PATH, JSON.stringify(products));
     }
   }

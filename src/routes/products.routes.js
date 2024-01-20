@@ -35,12 +35,17 @@ prodRouter.get("/:id", async (req, res) => {
 });
 
 prodRouter.post("/", async (req, res) => {
-  const validate = await productManager.addProduct(req.body);
-  if (validate) {
-    res.status(200).send("Producto creado correctamente");
-    return;
-  } else {
-    res.status(400).send("Error en crear producto");
+  try {
+    const validate = await productManager.addProduct(req.body);
+
+    if (validate) {
+      res.status(200).send("Producto creado correctamente");
+    } else {
+      res.status(400).send("Error en crear producto");
+    }
+  } catch (error) {
+    console.error("Error al procesar la solicitud:", error);
+    res.status(500).send("Error interno del servidor");
   }
 });
 
