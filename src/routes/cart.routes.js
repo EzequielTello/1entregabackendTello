@@ -37,15 +37,19 @@ cartRouter.delete("/:cid", async (req, res) => {
 
 // Solicitar Cart by Id
 cartRouter.get("/:cid", async (req, res) => {
-  const cid = req.params.id;
-  const cart = await cartManager.getCartById(parseInt(cid));
+  try {
+    const cartId = parseInt(req.params.cid);
+    const cart = await cartManager.getCartById(cartId);
 
-  if (cart) {
-    res.status(200).send(cart);
-  } else {
-    res
-      .status(404)
-      .send("El carrito con el id: " + cid + " no se ha encontrado");
+    if (cart) {
+      res.status(200).send(cart);
+    } else {
+      res
+        .status(404)
+        .send("El carrito con el id: " + cid + " no se ha encontrado");
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
 });
 

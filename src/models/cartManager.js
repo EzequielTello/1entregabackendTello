@@ -21,7 +21,7 @@ class CartManager {
   async getCarts() {
     try {
       const content = await fs.readFile(CARTS_PATH, "utf-8");
-      return JSON.parse(content) || [];
+      return JSON.parse(content);
     } catch (error) {
       console.log("Error al leer el carrito", error);
       return [];
@@ -77,7 +77,7 @@ class CartManager {
     }
   }
 
-  async addProductToCart(cartId, productId, quantit, products, carts) {
+  async addProductToCart(cartId, productId, quantity, products, carts) {
     try {
       const cartIndex = carts.findIndex((cart) => cart.id === cartId);
 
@@ -107,11 +107,6 @@ class CartManager {
       } else {
         carts[cartIndex].products.push({
           id: parseInt(productId),
-          title: product.title,
-          description: product.description,
-          price: product.price,
-          thumbnail: product.thumbnail,
-          code: product.code,
           quantity: parseInt(quantity),
         });
         console.log("Producto agregado al carrito.");
