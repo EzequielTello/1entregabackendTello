@@ -1,0 +1,61 @@
+<!-- realTimeProducts.handlebars -->
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Real-Time Products</title>
+  </head>
+  <body>
+    <h1>Real-Time Products</h1>
+
+    <ul>
+      {{#each products}}
+        <li>{{this.title}}
+          -
+          {{this.description}}
+          -
+          {{this.price}}
+          -
+          {{this.quantity}}</li>
+      {{/each}}
+    </ul>
+
+    <!-- Formulario para agregar productos mediante WebSocket -->
+    <form id="productForm">
+      <label for="title">Title:</label>
+      <input type="text" id="title" name="title" required />
+
+      <label for="description">Description:</label>
+      <input type="text" id="description" name="description" required />
+
+      <label for="price">Price:</label>
+      <input type="number" id="price" name="price" required />
+
+      <label for="price">Quantity:</label>
+      <input type="number" id="quantity" name="quantity" required />
+
+      <button type="submit">Agregar Producto</button>
+    </form>
+
+    <!-- Socket.IO Script -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io();
+      document.getElementById('productForm').addEventListener('submit',
+      function(event) { event.preventDefault(); const title =
+      document.getElementById('title').value; const description =
+      document.getElementById('description').value; const price =
+      document.getElementById('price').value; const quantity =
+      document.getElementById('quantity').value; un nuevo producto
+      socket.emit('newProduct', { title, description, price, quantity });
+      Limpiar el formulario document.getElementById('title').value = '';
+      document.getElementById('description').value = '';
+      document.getElementById('price').value = '';
+      document.getElementById('quantity').value = '';}); actualización de
+      productos desde el servidor socket.on('updateProducts', (updatedProduct)
+      => { tiempo real console.log('Productos actualizados:', updatedProduct);
+      });
+    </script>
+  </body>
+</html>

@@ -1,7 +1,7 @@
 import { promises as fs } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
-
+import { ProductManager } from "./productManager.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
@@ -77,8 +77,9 @@ class CartManager {
     }
   }
 
-  async addProductToCart(cartId, productId, quantity, products, carts) {
+  async addProductToCart(cartId, productId, quantity) {
     try {
+      const carts = await this.getCarts();
       const cartIndex = carts.findIndex((cart) => cart.id === cartId);
 
       if (cartIndex === -1) {
@@ -87,6 +88,8 @@ class CartManager {
           products: [],
         });
       }
+      const productManager = new ProductManager();
+      const products = await productManager.getProducts();
 
       const product = products.find((prod) => prod.id === productId);
 
@@ -105,6 +108,7 @@ class CartManager {
         existingProduct.quantity += parseInt(quantity);
         console.log("Cantidad del producto actualizada en el carrito.");
       } else {
+        console.log("Agregar bproducto al carrito.");
         carts[cartIndex].products.push({
           id: parseInt(productId),
           quantity: parseInt(quantity),
