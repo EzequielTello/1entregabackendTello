@@ -3,22 +3,26 @@ import { prodRouter } from "./routes/products.routes.js";
 import { cartRouter } from "./routes/cart.routes.js";
 import http from "http";
 import { Server } from "socket.io";
-import expressHandlebars from "express-handlebars";
 import { handlebarsRouter } from "./routes/handlebars.routes.js";
 import { realTimeProductsRouter } from "./routes/realTimeProducts.routes.js";
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+import { engine } from "express-handlebars";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const PORT = 8080;
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
-const hbs = expressHandlebars.create({
-  extname: "handlebars",
-  defaultLayout: "main",
-});
 
-app.engine("handlebars", hbs.engine);
+app.engine(
+  "handlebars",
+  engine({ extname: ".handlebars", defaultlayout: false })
+);
 app.set("view engine", "handlebars");
-app.set("views", "./views");
+app.set("views", join(__dirname, "views"));
 
 app.use(express.static("public"));
 
