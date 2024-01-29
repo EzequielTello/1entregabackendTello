@@ -1,1 +1,22 @@
-                                    
+body {
+  font-family: Arial, sans-serif;
+  background-color: red;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: blue;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  margin-bottom: 10px;
+  padding: 5px;
+  border: 1px solid #ec6e6e;
+  background-color: #8a3333;
+}

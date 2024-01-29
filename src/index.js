@@ -19,7 +19,7 @@ const io = new Server(server);
 
 app.engine(
   "handlebars",
-  engine({ extname: ".handlebars", defaultlayout: false })
+  engine({ extname: ".handlebars", defaultLayout: false })
 );
 app.set("view engine", "handlebars");
 app.set("views", join(__dirname, "views"));
