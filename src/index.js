@@ -24,13 +24,22 @@ app.engine(
 app.set("view engine", "handlebars");
 app.set("views", join(__dirname, "views"));
 
+let products = [];
+
 app.use(express.static("public"));
 
 io.on("connection", (socket) => {
   console.log("Usuario conectado");
 
+  socket.emit("updateProducts", products);
+
   socket.on("disconnect", () => {
     console.log("Usuario desconectado");
+  });
+  socket.on("newProduct", (newProduct) => {
+    products.push(newProduct);
+    console.log("Nuevo producto recibido:", newProduct);
+    io.emit("updateProducts", products);
   });
 });
 
