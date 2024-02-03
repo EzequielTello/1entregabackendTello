@@ -13,7 +13,7 @@
 
   </head>
   <body>
-    <h1>Home</h1>
+    <h1>ToyotaCars</h1>
 
     <ul>
       {{#each products}}
@@ -35,5 +35,13 @@
       crossorigin="anonymous"
     ></script>
 
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      const socket = io(); socket.on("updateProducts", (products) => {
+      console.log("Lista actualizada de productos:", products);
+      updateProductList(products); }); { console.log ("Interfaz actualizada con
+      la nueva lista de productos:", products); }
+
+    </script>
   </body>
 </html>
