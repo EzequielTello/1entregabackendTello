@@ -8,6 +8,7 @@ import { realTimeProductsRouter } from "./routes/realTimeProducts.routes.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { engine } from "express-handlebars";
+import { promises as fs } from "fs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,6 +26,18 @@ app.set("view engine", "handlebars");
 app.set("views", join(__dirname, "views"));
 
 let products = [];
+
+const loadProducts = async () => {
+  try {
+    const productsContent = await fs.readFile(
+      join(__dirname, "bd", "products.json"),
+      "utf-8"
+    );
+    products = JSON.parse(productsContent);
+  } catch (error) {
+    console.error("Error al cargar los productos:", error);
+  }
+};
 
 app.use(express.static("public"));
 
@@ -47,6 +60,8 @@ app.use("/api/products", prodRouter);
 app.use("/api/carts", cartRouter);
 app.use("/", handlebarsRouter);
 app.use("/realtimeproducts", realTimeProductsRouter);
+
+loadProducts();
 
 server.listen(PORT, () => {
   console.log(`Server on port: ${PORT}`);
