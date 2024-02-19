@@ -28,3 +28,28 @@ document
     // Un nuevo producto
     socket.emit("newProduct", { title, description, price, quantity });
   });
+
+socket.on("message-all", (data) => {
+  console.log(data);
+  render(data);
+});
+const render = (data) => {
+  const html = data
+    .map((el) => {
+      return `
+      <div>
+      <strong>${el.author}</strong> dice <em>${el.text}</em>
+      </div>
+      `;
+    })
+    .join(" ");
+  document.getElementById("caja").innerHTML = html;
+};
+const addMessage = () => {
+  const msg = {
+    author: document.getElementById("name").value,
+    text: document.getElementById("text").value,
+  };
+  socket.emit("new-message", msg);
+  return false;
+};

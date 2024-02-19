@@ -3,27 +3,31 @@ import { prodRouter } from "./routes/products.routes.js";
 import { cartRouter } from "./routes/cart.routes.js";
 import http from "http";
 import { Server } from "socket.io";
-import { handlebarsRouter } from "./routes/handlebars.routes.js";
+import { homeRouter } from "./routes/home.routes.js";
 import { realTimeProductsRouter } from "./routes/realTimeProducts.routes.js";
 import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 import { engine } from "express-handlebars";
 import { promises as fs } from "fs";
+import { chatHandlebarsRouter } from "./routes/chatHandlebars.routes.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const PORT = 8080;
+const PORT = 8080 || process.env.PORT;
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server);
+
+let arrMessage = [];
+app.use(express.static(__dirname + "/public"));
 
 app.engine(
   "handlebars",
   engine({ extname: ".handlebars", defaultLayout: false })
 );
 app.set("view engine", "handlebars");
-app.set("views", join(__dirname, "views"));
+app.set("views", join(__dirname + "/views"));
 
 let products = [];
 
@@ -39,8 +43,6 @@ const loadProducts = async () => {
   }
 };
 
-app.use(express.static("public"));
-
 io.on("connection", (socket) => {
   console.log("Usuario conectado");
 
@@ -54,13 +56,18 @@ io.on("connection", (socket) => {
     console.log("Nuevo producto recibido:", newProduct);
     io.emit("updateProducts", products);
   });
+  socket.emit("welcome", "Bienvenido nuevo cliente");
+  socket.on("new-message", (data) => {
+    arrMessage.push(data);
+    io.sockets.emit("message-all", arrMessage);
+  });
 });
 
 app.use("/api/products", prodRouter);
 app.use("/api/carts", cartRouter);
-app.use("/", handlebarsRouter);
+app.use("/home", homeRouter);
 app.use("/realtimeproducts", realTimeProductsRouter);
-
+app.use("/chatHandlebars", chatHandlebarsRouter);
 loadProducts();
 
 server.listen(PORT, () => {
